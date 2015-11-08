@@ -14,22 +14,33 @@ shinyServer(
                              payment = 0,
                              stringsAsFactors = FALSE)
 
-    
     # ActionButton for Reset Names 
     observeEvent(input$reset, {
-        cost.table <<- data.frame(name = "",
-                                 shares = as.integer(c(1, 1)),
-                                 payment = 0, 
-                                 stringsAsFactors = FALSE)
-        retrieve.table <<- FALSE
+      cost.table <<- data.frame(name = "",
+                                shares = as.integer(c(1, 1)),
+                                payment = 0, 
+                                stringsAsFactors = FALSE)
+      retrieve.table <<- FALSE
+    },
+    priority = 1)
+    
+    # ActionButton for Add Row 
+    observeEvent(input$addRow, {
+      cost.table <<- rbind(cost.table, list("", 1L, 0))
+      retrieve.table <<- FALSE
     },
     priority = 1)
 
-    output$debug <- renderPrint(retrieve.table)
+    # output$debug <- renderPrint("Debug")
 
+    # Main function for editable data table
     output$table <- renderRHandsontable({
-      if (input$reset > 0) {}
       
+      # Execute the function if either of the buttons are pressed
+      if (input$reset > 0) {}
+      if (input$addRow > 0) {}
+      
+      # Retrieve the modified table
       if (!is.null(input$table) && retrieve.table == TRUE) {
         cost.table <- hot_to_r(input$table)
         names(cost.table) <- c("name", "shares", "payment")
@@ -45,10 +56,13 @@ shinyServer(
       share.cost <- as.numeric(input$cost) / sum(cost.table$shares)
       cost.table$payment <- round(share.cost * cost.table$shares, payment.digits)
       
-      rhandsontable(cost.table, rowHeaders = NULL, colHeaders = c("Names", 
-                                                                  "Shares", 
-                                                                  "Payment")
-                    )
+      rhandsontable(cost.table, 
+                    rowHeaders = NULL, 
+                    colHeaders = c("Names", "Shares", "Payment"),
+                    contextMenu = FALSE,
+                    fillHandle = FALSE,
+                    allowRowEdit = FALSE,
+                    allowColEdit = FALSE)
       })
   }
 )
