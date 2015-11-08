@@ -1,5 +1,6 @@
 library(shiny)
 library(rhandsontable)
+# library(ggplot2)
 
 shinyServer(
   function(input, output) {
@@ -63,6 +64,31 @@ shinyServer(
                     fillHandle = FALSE,
                     allowRowEdit = FALSE,
                     allowColEdit = FALSE)
-      })
+    })
+    
+# The plot is pretty, but it will take too much effort to hook it up to all the reactive events 
+# and to prevent it from constraining the data table
+# 
+#     output$plot <- renderPlot({
+#       # Execute the function if the table changes
+#       if (!is.null(input$table)) {}
+# 
+#       if(input$cost != 0){
+#         # Reorder the names so that the plot is in the correct order
+#         cost.table$name2 <- reorder(cost.table$name, nrow(cost.table):1)
+#         
+#         ggplot(cost.table, aes(x = name2, y = payment)) +
+#           geom_bar(stat = "identity", fill = "limegreen") +
+#           coord_flip() +
+#           geom_text(aes(label = payment, hjust = 1.3)) +         
+#           theme(legend.position = "none",
+#                 panel.grid = element_blank(),
+#                 axis.text.x = element_blank(),
+#                 axis.ticks.x = element_blank(),
+#                 axis.ticks.y = element_blank()
+#           ) +
+#           labs(x = NULL, y = NULL)        
+#       }
+#     })
   }
 )
