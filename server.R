@@ -3,22 +3,25 @@ library(rhandsontable)
 
 # The Nottingham group are a set of friends from university
 # We'll use them as a pre-populated data set
-nottingham.group <- data.frame(name = c('Ashby', 'Bradley', 'Grogan', 'Judge', 'Laud', 
+# nottingham.group 
+cost.table <- data.frame(name = c('Ashby', 'Bradley', 'Grogan', 'Judge', 'Laud', 
                                       'Lill', 'Megan', 'Pollard', 'Quinlan'),
                             share = as.integer(c(3, 3, 2, 3, 3, 3, 3, 3, 1)),
-                            payment = numeric(9),
+                            payment = 0,
                             stringsAsFactors = FALSE)
 
 shinyServer(
   function(input, output) {
-    sharing.table <- nottingham.group
     
+    output$oshares <- renderPrint({sum(cost.table$share)})
 
-    output$table <- renderRHandsontable({rhandsontable(sharing.table, 
-                                                       rowHeaders = NULL,
-                                                       colHeaders = c("Names", 
-                                                                      "Shares", 
-                                                                      "Payment")
-                                                       )})
+    output$table <- renderRHandsontable({
+      share.cost <- as.numeric(input$cost) / sum(cost.table$share)
+      cost.table$payment <- share.cost * cost.table$share
+      rhandsontable(cost.table, rowHeaders = NULL, colHeaders = c("Names", 
+                                                                  "Shares", 
+                                                                  "Payment")
+                    )
+      })
   }
 )
