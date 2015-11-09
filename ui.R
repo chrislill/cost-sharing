@@ -10,12 +10,13 @@ shinyUI(fluidPage(
     checkboxInput("rounding", "Round payments?")
   ),
   mainPanel(
-    p("This page lets you distribute costs between people, based on a number of 
-      shares. This enables a fairer way of sharing between families and individuals. 
-      The default values give an example for sharing costs between my friends' families."),
-    p("Follow these steps or see the presentation for more details."),
+    p("Going on holiday in a large group is great fun, but splitting costs is difficult."),
+    p("One approach is to allocate a number of shares per person or family. This app will
+      do the maths for you. The default values give an example for sharing costs between
+      my friends' families."),
+    p("Just follow these steps to get started. There's more detail in the presentation."),
     tags$ol(tags$li("Set the cost"),
-            tags$li("Enter the names and shares in the table"),
+            tags$li("Enter the names and shares in the table - double tap to edit on a mobile device"),
             tags$li("Copy the results into an email")),
     tags$br(),
     # verbatimTextOutput("debug"),
