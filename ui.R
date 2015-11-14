@@ -14,10 +14,12 @@ shinyUI(fluidPage(
     p("One approach is to allocate a number of shares per person or family. This app will
       do the maths for you. The default values give an example for sharing costs between
       my friends' families."),
-    p("Just follow these steps to get started. There's more detail in the presentation."),
+    p("Just follow these steps to get started."),
     tags$ol(tags$li("Set the cost"),
-            tags$li("Enter the names and shares in the table - double tap to edit on a mobile device"),
+            tags$li("Enter the names and shares in the table - double tap to edit"),
             tags$li("Copy the results into an email")),
+    p("There's more detail in the presentation at ", 
+      a("http://rpubs.com/chrislill/cost-sharing", href="http://rpubs.com/chrislill/cost-sharing")),
     tags$br(),
     # verbatimTextOutput("debug"),
     rHandsontableOutput('table')
